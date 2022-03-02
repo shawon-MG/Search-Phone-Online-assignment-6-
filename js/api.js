@@ -1,34 +1,45 @@
 const btnClicked = () =>{
-    const inputField = document.getElementById('input-field');
-    const inputText = inputField.value;
-    console.log(inputText);
-    inputField.value = '';
+    const searchField = document.getElementById('search-field');
+    const searchFieldText = searchField.value;
+    console.log(searchFieldText);
+    searchField.value = '';
 
-    const url = `https://openapi.programming-hero.com/api/phones?search=${inputText}`;
-    fetch (url)
-    .then (res => res.json())
-    .then (data => displaySearchResult(data.data))
-} 
+    const url = `https://openapi.programming-hero.com/api/phones?search=${searchFieldText}`;
+    fetch(url)
+    .then(res => res.json())
+    .then(data => searchResults(data.data))
+};
 
-const displaySearchResult = data =>{
-    const searchResult = document.getElementById('search-result');
-    data.forEach(data => {
-        console.log(data);
+const searchResults = data =>{
+    const searchResultsArea = document.getElementById('search-result-area');
+    data.forEach(afterLoopData => {
+        console.log(afterLoopData);
         const div = document.createElement('div');
         div.classList.add('col');
         div.innerHTML = `
-        <div class="col>
-        <div class="card h-100">
-        <img src="${data.image}" class="card-img-top" alt="">
+        <div class="card">
+        <img src="${afterLoopData.image}" class="card-img-top w-75" alt="...">
         <div class="card-body">
-          <h6 class="card-title">Phone Name: ${data.phone_name}<h6>
-          <h6 class="card-title">Brand: ${data.brand}</h6>
-        </div>
-        <div class="btn-group" role="group" aria-label="Basic mixed styles example">                      
-            <button type="button" class="btn btn-warning rounded-pill m-4">Details</button>
+          <h5>Phone Name: ${afterLoopData.phone_name}</h5>
+          <h5>Brand: ${afterLoopData.brand}</h5>
+          <button onClick="phoneDetails('${afterLoopData.slug}')" type="button" class="btn btn-dark">Details</button>
         </div>
       </div>
         `;
-        searchResult.appendChild(div);
+        searchResultsArea.appendChild(div);
+    });
+}; 
+const phoneDetails = detailData =>{
+    console.log(detailData);
+    const url = `https://openapi.programming-hero.com/api/phone/${detailData}`;
+    fetch(url)
+    .then(res => res.json())
+    .then(aPhoneDetaildata => detailSearchResultArea(aPhoneDetaildata.data))
+};
+const detailSearchResultArea = aPhoneDetaildata =>{
+    console.log(aPhoneDetaildata);
+    const phoneDetailsArea = document.getElementById('phone-detail-area');
+    aPhoneDetaildata.forEach(afterLoopPhoneDetailData =>{
+        console.log(afterLoopPhoneDetailData);
     })
-}
+};
