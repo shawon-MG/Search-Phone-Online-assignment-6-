@@ -15,7 +15,7 @@ const btnClicked = () =>{
     const url = `https://openapi.programming-hero.com/api/phones?search=${searchFieldText}`;
     fetch(url)
     .then(res => res.json())
-    .then(data => searchResults(data.data))
+    .then(data => searchResults(data.data.slice(0, 20)))
 };
 
 const searchResults = data =>{
@@ -24,7 +24,7 @@ const searchResults = data =>{
     searchResultsArea.textContent = '';
 
     if (data.length !== 0){
-        data.forEach(afterLoopData => {
+        data?.forEach(afterLoopData => {   /* including optional chaining ( ?.) */
             console.log(afterLoopData);
             const div = document.createElement('div');
             div.classList.add('col');
@@ -73,6 +73,7 @@ const phoneDetails = detailData =>{
 const detailSearchResultArea = aPhoneDetaildata =>{
     console.log(aPhoneDetaildata);
     const phoneDetailsArea = document.getElementById('phone-detail-area');
+    phoneDetailsArea.textContent = ''; /* Clearing previous phone details */
     const div = document.createElement('div');
     div.classList.add('row');
     div.innerHTML = `
@@ -83,9 +84,9 @@ const detailSearchResultArea = aPhoneDetaildata =>{
   <div class="col-md-8">
     <div class="card-body">
       <h5> <span class="bg-info rounded"> Brand: </span> ${aPhoneDetaildata.brand}</h5>
-      <h5> <span class="bg-info rounded"> Release Date: </span> ${aPhoneDetaildata.releaseDate}</h5>
-      <h5> <span class="bg-info rounded"> MainFeatures: </span> <br> ChipSet: ${aPhoneDetaildata.mainFeatures.chipSet}, DisplaySize: ${aPhoneDetaildata.mainFeatures.displaySize}, </span> <br> Memory: ${aPhoneDetaildata.mainFeatures.memory}</h5>
-      <h5> <span class="bg-info rounded"> Brand: </span> ${aPhoneDetaildata.brand}</h5>
+      <h5> <span class="bg-info rounded"> Release Date: </span> ${aPhoneDetaildata.releaseDate ? aPhoneDetaildata.releaseDate: 'Not Found' }</h5>
+      <h5> <span class="bg-info rounded"> MainFeatures: </span> <br> ChipSet: ${aPhoneDetaildata.mainFeatures.chipSet},<br> DisplaySize: ${aPhoneDetaildata.mainFeatures.displaySize},<br> Memory: ${aPhoneDetaildata.mainFeatures.memory}<br></h5>
+
     </div> 
   </div>
     `;
