@@ -39,7 +39,23 @@ const phoneDetails = detailData =>{
 const detailSearchResultArea = aPhoneDetaildata =>{
     console.log(aPhoneDetaildata);
     const phoneDetailsArea = document.getElementById('phone-detail-area');
-    aPhoneDetaildata.forEach(afterLoopPhoneDetailData =>{
-        console.log(afterLoopPhoneDetailData);
-    })
+    const div = document.createElement('div');
+    div.classList.add('row');
+    div.innerHTML = `
+    <h2 class="text-center">Detail informaiton about the phone you want</h2>
+    <div class="col-md-4">
+    <img src="${aPhoneDetaildata.image}" class="img-fluid rounded-start" alt="...">
+  </div>
+  <div class="col-md-8">
+    <div class="card-body">
+      <h5>Brand: ${aPhoneDetaildata.brand}</h5>
+      <h5>Release Date:${aPhoneDetaildata.releaseDate}</h5>
+      <h5>MainFeatures: <br> ChipSet: ${aPhoneDetaildata.mainFeatures.chipSet}, DisplaySize: ${aPhoneDetaildata.mainFeatures.displaySize}, <br> Memory: ${aPhoneDetaildata.mainFeatures.memory}</h5>
+      <h5>Brand: ${aPhoneDetaildata.brand}</h5>
+    </div>
+  </div>
+    `;
+    phoneDetailsArea.appendChild(div);
+
+    
 };
