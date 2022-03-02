@@ -2,7 +2,15 @@ const btnClicked = () =>{
     const searchField = document.getElementById('search-field');
     const searchFieldText = searchField.value;
     console.log(searchFieldText);
+/*------ clearing previous input field data :--------  */
     searchField.value = '';
+
+    // if (searchFieldText == ''){
+    //     const searchResultsArea = document.getElementById('search-result-area');
+    //     const h3 = document.getElementById('h3');
+    //     h3.innerText = " Please Write Something to Search. "
+    //     searchResultsArea.appendChild(h3);
+    // }
 
     const url = `https://openapi.programming-hero.com/api/phones?search=${searchFieldText}`;
     fetch(url)
@@ -12,23 +20,49 @@ const btnClicked = () =>{
 
 const searchResults = data =>{
     const searchResultsArea = document.getElementById('search-result-area');
-    data.forEach(afterLoopData => {
-        console.log(afterLoopData);
-        const div = document.createElement('div');
-        div.classList.add('col');
-        div.innerHTML = `
-        <div class="card">
-        <img src="${afterLoopData.image}" class="card-img-top w-75" alt="...">
-        <div class="card-body">
-          <h5>Phone Name: ${afterLoopData.phone_name}</h5>
-          <h5>Brand: ${afterLoopData.brand}</h5>
-          <button onClick="phoneDetails('${afterLoopData.slug}')" type="button" class="btn btn-dark">Details</button>
-        </div>
-      </div>
-        `;
-        searchResultsArea.appendChild(div);
-    });
-}; 
+/*---------- clearing previous search result information form website:---------  */
+    searchResultsArea.textContent = '';
+
+    if (data.length !== 0){
+        data.forEach(afterLoopData => {
+            console.log(afterLoopData);
+            const div = document.createElement('div');
+            div.classList.add('col');
+            div.innerHTML = `
+            <div class="card">
+            <img src="${afterLoopData.image}" class="card-img-top w-75" alt="...">
+            <div class="card-body">
+              <h5>Phone Name: ${afterLoopData.phone_name}</h5>
+              <h5>Brand: ${afterLoopData.brand}</h5>
+              <button onClick="phoneDetails('${afterLoopData.slug}')" type="button" class="btn btn-dark">Details</button>
+            </div>
+          </div>
+            `;
+            searchResultsArea.appendChild(div);
+        });
+      } else {
+          const h3 = document.createElement('h3');
+          h3.innerText = "The Phone You Want Is Not Found. Write Something Valid to Search."
+          searchResultsArea.appendChild(h3);
+      } 
+    }
+//     data.forEach(afterLoopData => {
+//         console.log(afterLoopData);
+//         const div = document.createElement('div');
+//         div.classList.add('col');
+//         div.innerHTML = `
+//         <div class="card">
+//         <img src="${afterLoopData.image}" class="card-img-top w-75" alt="...">
+//         <div class="card-body">
+//           <h5>Phone Name: ${afterLoopData.phone_name}</h5>
+//           <h5>Brand: ${afterLoopData.brand}</h5>
+//           <button onClick="phoneDetails('${afterLoopData.slug}')" type="button" class="btn btn-dark">Details</button>
+//         </div>
+//       </div>
+//         `;
+//         searchResultsArea.appendChild(div);
+//     });
+// }; 
 const phoneDetails = detailData =>{
     console.log(detailData);
     const url = `https://openapi.programming-hero.com/api/phone/${detailData}`;
@@ -48,11 +82,11 @@ const detailSearchResultArea = aPhoneDetaildata =>{
   </div>
   <div class="col-md-8">
     <div class="card-body">
-      <h5>Brand: ${aPhoneDetaildata.brand}</h5>
-      <h5>Release Date:${aPhoneDetaildata.releaseDate}</h5>
-      <h5>MainFeatures: <br> ChipSet: ${aPhoneDetaildata.mainFeatures.chipSet}, DisplaySize: ${aPhoneDetaildata.mainFeatures.displaySize}, <br> Memory: ${aPhoneDetaildata.mainFeatures.memory}</h5>
-      <h5>Brand: ${aPhoneDetaildata.brand}</h5>
-    </div>
+      <h5> <span class="bg-info rounded"> Brand: </span> ${aPhoneDetaildata.brand}</h5>
+      <h5> <span class="bg-info rounded"> Release Date: </span> ${aPhoneDetaildata.releaseDate}</h5>
+      <h5> <span class="bg-info rounded"> MainFeatures: </span> <br> ChipSet: ${aPhoneDetaildata.mainFeatures.chipSet}, DisplaySize: ${aPhoneDetaildata.mainFeatures.displaySize}, </span> <br> Memory: ${aPhoneDetaildata.mainFeatures.memory}</h5>
+      <h5> <span class="bg-info rounded"> Brand: </span> ${aPhoneDetaildata.brand}</h5>
+    </div> 
   </div>
     `;
     phoneDetailsArea.appendChild(div);
