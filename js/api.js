@@ -5,6 +5,9 @@ const btnClicked = () =>{
     console.log(searchFieldText);
 /*------ clearing previous input field data :--------  */
     searchField.value = '';
+/*-------- clearing total area after a new search : -------- */
+    const phoneDetails = document.getElementById('phone-detail-area');
+    phoneDetails.innerHTML = '';
 
     const url = `https://openapi.programming-hero.com/api/phones?search=${searchFieldText}`;
     fetch(url)
@@ -25,8 +28,8 @@ const searchResults = data =>{
             const div = document.createElement('div');
             div.classList.add('col');
             div.innerHTML = `
-            <div class="card">
-            <img src="${afterLoopData.image}" class="card-img-top w-75" alt="...">
+            <div class="card border border-dark border-1 rounded w-100">
+            <img src="${afterLoopData.image}" class="card-img-top w-50" alt="...">
             <div class="card-body">
               <h5>Phone Name: ${afterLoopData.phone_name}</h5>
               <h5>Brand: ${afterLoopData.brand}</h5>
@@ -59,19 +62,19 @@ const detailSearchResultArea = aPhoneDetaildata =>{
     const div = document.createElement('div');
     div.classList.add('row');
     div.innerHTML = `
-    <h2 class="text-center">Detail informaiton about the phone you want</h2>
-    <div class="col-md-4">
-    <img src="${aPhoneDetaildata.image}" class="img-fluid rounded-start" alt="...">
-  </div>
-  <div class="col-md-8">
-    <div class="card-body">
+       <h2 class="text-center">Detail informaiton about the phone you want</h2>
+       <div class="col-md-4">
+          <img src="${aPhoneDetaildata.image}" class="img-fluid rounded-start" alt="...">
+       </div>
+       <div class="col-md-8">
+          <div class="card-body">
 
-      <h5> <span class="bg-info rounded"> Brand: </span> ${aPhoneDetaildata.brand}</h5>
-      <h5> <span class="bg-info rounded"> Release Date: </span> ${aPhoneDetaildata.releaseDate ? aPhoneDetaildata.releaseDate: 'Not Found' }</h5>
-      <h5> <span class="bg-info rounded"> MainFeatures: </span> <br> ChipSet: ${aPhoneDetaildata.mainFeatures.chipSet},<br> DisplaySize: ${aPhoneDetaildata.mainFeatures.displaySize},<br> Memory: ${aPhoneDetaildata.mainFeatures.memory}<br></h5>
-
-    </div> 
-  </div>
+              <h5> <span class="bg-info rounded"> Brand: </span> ${aPhoneDetaildata.brand}</h5>
+              <h5> <span class="bg-info rounded"> Release Date: </span> ${aPhoneDetaildata.releaseDate ? aPhoneDetaildata.releaseDate: 'Not Found' }</h5>
+              <h5> <span class="bg-info rounded"> MainFeatures: </span> <br> <strong>ChipSet:</strong> ${aPhoneDetaildata.mainFeatures.chipSet},<br> <strong>DisplaySize:</strong> ${aPhoneDetaildata.mainFeatures.displaySize},<br> <strong> Memory:</strong> ${aPhoneDetaildata.mainFeatures.memory}<br></h5>
+ 
+         </div> 
+       </div>
     `;
     phoneDetailsArea.appendChild(div);
 };
